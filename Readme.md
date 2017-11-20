@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/Codeception/AssertThrows.svg?branch=master)](https://travis-ci.org/Codeception/AssertThrows)
 
-Expect exceptions inside a tests without a stop!
+Handle exceptions inside a test without a stop!
+
+---
 
 Assertions for exceptions. Works with PHPUnit and Codeception.
 
