@@ -35,6 +35,13 @@ class AssertThrowsTest extends PHPUnit\Framework\TestCase
         $this->fail("Ups :(");
     }
 
+    public function testExceptionMessageCaseInsensitive()
+    {
+        $this->assertThrowsWithMessage(MyException::class, "Message and Expected Message CAN have different case", function() {
+            throw new MyException("Message and expected message can have different case");
+        });
+    }
+
 }
 
 class MyException extends Exception {

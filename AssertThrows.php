@@ -33,9 +33,11 @@ trait AssertThrows
         $result = $this->getTestResultObject();
 
         if (is_array($throws)) {
-            $message = ($throws[1]) ? strtolower($throws[1]) : false;
+            $message = ($throws[1]) ? $throws[1] : false;
             $throws = $throws[0];
         }
+
+        $message = strtolower($message);
 
         try {
             call_user_func($fn);
