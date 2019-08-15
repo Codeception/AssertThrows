@@ -11,8 +11,11 @@ class AssertThrowsTest extends PHPUnit\Framework\TestCase
         $this->assertThrows(MyException::class, function() {
             throw new MyException();
         });
+        $this->assertThrows(MyException::class, function() {
+            throw new MyException('with ignored message');
+        });
         $this->assertTrue(true);
-        $this->assertEquals($count + 2, \PHPUnit\Framework\Assert::getCount());
+        $this->assertEquals($count + 3, \PHPUnit\Framework\Assert::getCount());
     }
 
     public function testExceptionWithMessage()

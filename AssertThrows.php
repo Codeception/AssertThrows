@@ -37,7 +37,9 @@ trait AssertThrows
             $throws = $throws[0];
         }
 
-        $message = strtolower($message);
+        if (is_string($message)) {
+            $message = strtolower($message);
+        }
 
         try {
             call_user_func($fn);
