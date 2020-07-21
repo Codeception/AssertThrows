@@ -32,7 +32,7 @@ class AssertThrowsTest extends PHPUnit\Framework\TestCase
                 throw new MyException("hallo");
             });
         } catch (AssertionFailedError $e) {
-            $this->assertEquals("exception message 'hello' was expected, but 'hallo' was received", $e->getMessage());
+            $this->assertEquals("Exception message 'hello' was expected, but 'hallo' was received", $e->getMessage());
             return;
         }
         $this->fail("Ups :(");
