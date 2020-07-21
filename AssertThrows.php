@@ -50,17 +50,17 @@ trait AssertThrows
             }
 
             if ($message !== false && $message !== strtolower($e->getMessage())) {
-                throw new AssertionFailedError("exception message '$message' was expected, but '" . $e->getMessage() . "' was received");
+                throw new AssertionFailedError("Exception message '$message' was expected, but '" . $e->getMessage() . "' was received");
             }
 
         } catch (\Exception $e) {
             if ($throws) {
                 if ($throws !== get_class($e)) {
-                    throw new AssertionFailedError("exception '$throws' was expected, but " . get_class($e) . " was thrown with message '" . $e->getMessage() . "'");
+                    throw new AssertionFailedError("Exception '$throws' was expected, but " . get_class($e) . " was thrown with message '" . $e->getMessage() . "'");
                 }
 
                 if ($message !== false && $message !== strtolower($e->getMessage())) {
-                    throw new AssertionFailedError("exception message '$message' was expected, but '" . $e->getMessage() . "' was received");
+                    throw new AssertionFailedError("Exception message '$message' was expected, but '" . $e->getMessage() . "' was received");
                 }
             } else {
                 throw $e;
@@ -71,7 +71,7 @@ trait AssertThrows
             if (isset($e)) {
                 $this->assertTrue(true, 'exception handled');
             } else {
-                throw new AssertionFailedError("exception '$throws' was not thrown as expected");
+                throw new AssertionFailedError("Exception '$throws' was not thrown as expected");
             }
         }
 
