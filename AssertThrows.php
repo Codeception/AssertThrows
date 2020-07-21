@@ -56,7 +56,7 @@ trait AssertThrows
         } catch (\Exception $e) {
             if ($throws) {
                 if ($throws !== get_class($e)) {
-                    throw new AssertionFailedError("exception '$throws' was expected, but " . get_class($e) . ' was thrown');
+                    throw new AssertionFailedError("exception '$throws' was expected, but " . get_class($e) . " was thrown with message '" . $e->getMessage() . "'");
                 }
 
                 if ($message !== false && $message !== strtolower($e->getMessage())) {
