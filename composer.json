@@ -3,7 +3,7 @@
     "description": "Assert exception was thrown without stopping a test",
     "type": "library",
     "require": {
-        "phpunit/phpunit": "^6.4|^7.0|^8.0"
+        "phpunit/phpunit": "^6.4|^7.0|^8.0|^9.0"
     },
     "license": "MIT",
     "autoload": {
