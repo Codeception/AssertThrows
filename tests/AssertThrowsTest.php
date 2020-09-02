@@ -1,13 +1,17 @@
-<?php
-use PHPUnit\Framework\AssertionFailedError;
+<?php declare(strict_types=1);
 
-class AssertThrowsTest extends PHPUnit\Framework\TestCase
+use Codeception\AssertThrows;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\TestCase;
+
+final class AssertThrowsTest extends TestCase
 {
-    use \Codeception\AssertThrows;
+    use AssertThrows;
 
     public function testBasicException()
     {
-        $count = \PHPUnit\Framework\Assert::getCount();
+        $count = Assert::getCount();
         $this->assertThrows(MyException::class, function() {
             throw new MyException();
         });
@@ -15,40 +19,61 @@ class AssertThrowsTest extends PHPUnit\Framework\TestCase
             throw new MyException('with ignored message');
         });
         $this->assertTrue(true);
-        $this->assertEquals($count + 3, \PHPUnit\Framework\Assert::getCount());
+        $this->assertEquals($count + 3, Assert::getCount());
     }
 
     public function testExceptionWithMessage()
     {
-        $this->assertThrowsWithMessage(MyException::class, "hello", function() {
-            throw new MyException("hello");
+        $this->assertThrowsWithMessage(MyException::class, 'hello', function() {
+            throw new MyException('hello');
         });
     }
 
     public function testExceptionMessageFails()
     {
         try {
-            $this->assertThrowsWithMessage(MyException::class, "hello", function() {
-                throw new MyException("hallo");
+            $this->assertThrowsWithMessage(MyException::class, 'hello', function() {
+                throw new MyException('hallo');
             });
         } catch (AssertionFailedError $e) {
-            $this->assertEquals("Exception message 'hello' was expected, but 'hallo' was received", $e->getMessage());
+            $this->assertEquals(
+                "Exception message 'hello' was expected, but 'hallo' was received",
+                $e->getMessage()
+            );
             return;
         }
-        $this->fail("Ups :(");
+        $this->fail('Ups :(');
     }
 
     public function testExceptionMessageCaseInsensitive()
     {
-        $this->assertThrowsWithMessage(MyException::class, "Message and Expected Message CAN have different case", function() {
-            throw new MyException("Message and expected message can have different case");
-        });
+        $this->assertThrowsWithMessage(
+            MyException::class,
+            'Message and Expected Message CAN have different case',
+            function() {
+                throw new MyException('Message and expected message can have different case');
+            }
+        );
     }
 
+    public function testAssertDoesNotThrow(): void
+    {
+        $func = function (): void {
+            throw new Exception('foo');
+        };
+
+        $this->assertDoesNotThrow(RuntimeException::class, $func);
+        $this->assertDoesNotThrowWithMessage(RuntimeException::class, 'bar', $func);
+        $this->assertDoesNotThrowWithMessage(RuntimeException::class, 'foo', $func);
+        $this->assertDoesNotThrow(new RuntimeException(), $func);
+        $this->assertDoesNotThrow(new RuntimeException('bar'), $func);
+        $this->assertDoesNotThrow(new RuntimeException('foo'), $func);
+        $this->assertDoesNotThrowWithMessage(Exception::class, 'bar', $func);
+        $this->assertDoesNotThrow(new Exception('bar'), $func);
+    }
 }
 
-class MyException extends Exception {
 
-
+final class MyException extends Exception {
 
 }
