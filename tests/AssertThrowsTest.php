@@ -56,6 +56,21 @@ final class AssertThrowsTest extends TestCase
         );
     }
 
+    public function testAssertThrowsWithParams()
+    {
+        $func = function (string $foo, string $bar): void {
+            throw new Exception($foo.$bar);
+        };
+
+        $this->assertThrowsWithMessage(
+            Exception::class,
+            'foobar',
+            $func,
+            'foo',
+            'bar'
+        );
+    }
+
     public function testAssertDoesNotThrow(): void
     {
         $func = function (): void {

@@ -33,12 +33,13 @@ trait AssertThrows
      * Asserts that callback throws an exception
      *
      * @param $throws
-     * @param callable $fn
+     * @param callable $func
+     * @param mixed ...$params
      * @throws Throwable
      */
-    public function assertThrows($throws, callable $fn)
+    public function assertThrows($throws, callable $func, ...$params)
     {
-        $this->assertThrowsWithMessage($throws, null, $fn);
+        $this->assertThrowsWithMessage($throws, null, $func, $params);
     }
 
     /**
@@ -46,10 +47,11 @@ trait AssertThrows
      *
      * @param string|Throwable $throws
      * @param string|null $message
-     * @param callable $fn
+     * @param callable $func
+     * @param mixed ...$params
      * @throws Throwable
      */
-    public function assertThrowsWithMessage($throws, ?string $message, callable $fn)
+    public function assertThrowsWithMessage($throws, ?string $message, callable $func, ...$params)
     {
         if ($throws instanceof Throwable) {
             $message = $throws->getMessage();
@@ -61,7 +63,11 @@ trait AssertThrows
         }
 
         try {
-            call_user_func($fn);
+            if ($params) {
+                call_user_func_array($func, $params);
+            } else {
+                call_user_func($func);
+            }
         } catch (AssertionFailedError $exception) {
 
             if ($throws !== get_class($exception)) {
@@ -110,11 +116,12 @@ trait AssertThrows
      * Asserts that callback does not throws an exception
      *
      * @param null|string|Throwable $throws
-     * @param callable $fn
+     * @param callable $func
+     * @param mixed ...$params
      */
-    public function assertDoesNotThrow($throws, callable $fn)
+    public function assertDoesNotThrow($throws, callable $func, ...$params)
     {
-        $this->assertDoesNotThrowWithMessage($throws, null, $fn);
+        $this->assertDoesNotThrowWithMessage($throws, null, $func, $params);
     }
 
     /**
@@ -122,9 +129,10 @@ trait AssertThrows
      *
      * @param null|string|Throwable $throws
      * @param string|null $message
-     * @param callable $fn
+     * @param callable $func
+     * @param mixed ...$params
      */
-    public function assertDoesNotThrowWithMessage($throws, ?string $message, callable $fn)
+    public function assertDoesNotThrowWithMessage($throws, ?string $message, callable $func, ...$params)
     {
         if ($throws instanceof Throwable) {
             $message = $throws->getMessage();
@@ -132,7 +140,11 @@ trait AssertThrows
         }
 
         try {
-            call_user_func($fn);
+            if ($params) {
+                call_user_func_array($func, $params);
+            } else {
+                call_user_func($func);
+            }
         } catch (Throwable $exception) {
             if (!$throws) {
                 throw new AssertionFailedError('Exception was not expected to be thrown');
