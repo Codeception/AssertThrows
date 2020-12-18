@@ -2,7 +2,7 @@
 
 Handle exceptions inside a test without a stop! Works with PHPUnit and Codeception.
 
-[![Build Status](https://travis-ci.org/Codeception/AssertThrows.svg?branch=master)](https://travis-ci.org/Codeception/AssertThrows)
+![Build Status](https://github.com/Codeception/AssertThrows/workflows/CI/badge.svg)
 
 ## Installation
 
