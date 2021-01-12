@@ -1,13 +1,16 @@
 # AssertThrows
 
-Handle exceptions inside a test without a stop! Works with PHPUnit and Codeception.
+Handle exceptions inside a test without a stop! Works with **PHPUnit** and Codeception.
 
-![Build Status](https://github.com/Codeception/AssertThrows/workflows/CI/badge.svg)
+[![Actions Status](https://github.com/Codeception/AssertThrows/workflows/CI/badge.svg)](https://github.com/Codeception/AssertThrows/actions)
+[![Latest Stable Version](https://poser.pugx.org/codeception/Assert-Throws/v/stable)](https://github.com/Codeception/AssertThrows/releases)
+[![Total Downloads](https://poser.pugx.org/codeception/Assert-Throws/downloads)](https://packagist.org/packages/codeception/Assert-Throws)
+[![License](https://poser.pugx.org/codeception/Assert-Throws/license)](/LICENSE)
 
 ## Installation
 
 ```
-composer require codeception/assert-throws --dev
+composer require "codeception/assert-throws" --dev
 ```
 
 Include `AssertThrows` trait it to a TestCase:
@@ -57,4 +60,8 @@ $this->assertThrowsWithMessage(
 );
 ```
 
-### License MIT
+## License
+
+`Codeception AssertThrows` is open-sourced software licensed under the [MIT](/LICENSE) License.
+
+© Codeception PHP Testing Framework
