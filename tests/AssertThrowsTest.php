@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use Codeception\AssertThrows;
 use PHPUnit\Framework\Assert;
@@ -35,13 +37,14 @@ final class AssertThrowsTest extends TestCase
             $this->assertThrowsWithMessage(MyException::class, 'hello', function() {
                 throw new MyException('hallo');
             });
-        } catch (AssertionFailedError $e) {
+        } catch (AssertionFailedError $error) {
             $this->assertEquals(
                 "Exception message 'hello' was expected, but 'hallo' was received",
-                $e->getMessage()
+                $error->getMessage()
             );
             return;
         }
+
         $this->fail('Ups :(');
     }
 
@@ -66,12 +69,11 @@ final class AssertThrowsTest extends TestCase
             Exception::class,
             'foobar',
             $func,
-            'foo',
-            'bar'
+            ['foo', 'bar']
         );
     }
 
-    public function testAssertDoesNotThrow(): void
+    public function testAssertDoesNotThrow()
     {
         $func = function (): void {
             throw new Exception('foo');
@@ -87,7 +89,6 @@ final class AssertThrowsTest extends TestCase
         $this->assertDoesNotThrow(new Exception('bar'), $func);
     }
 }
-
 
 final class MyException extends Exception {
 

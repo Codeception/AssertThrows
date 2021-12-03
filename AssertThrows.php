@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Codeception;
 
@@ -8,10 +10,6 @@ use Throwable;
 
 trait AssertThrows
 {
-    /**
-     * @param string|null $message
-     * @param Throwable $exception
-     */
     private function checkException(?string $message, Throwable $exception)
     {
         $actualMessage = strtolower($exception->getMessage());
@@ -32,12 +30,12 @@ trait AssertThrows
     /**
      * Asserts that callback throws an exception
      *
-     * @param $throws
+     * @param string|Throwable $throws
      * @param callable $func
      * @param mixed ...$params
      * @throws Throwable
      */
-    public function assertThrows($throws, callable $func, ...$params)
+    public function assertThrows($throws, callable $func, array $params = [])
     {
         $this->assertThrowsWithMessage($throws, null, $func, $params);
     }
@@ -51,7 +49,7 @@ trait AssertThrows
      * @param mixed ...$params
      * @throws Throwable
      */
-    public function assertThrowsWithMessage($throws, ?string $message, callable $func, ...$params)
+    public function assertThrowsWithMessage($throws, ?string $message, callable $func, array $params = [])
     {
         if ($throws instanceof Throwable) {
             $message = $throws->getMessage();
@@ -63,7 +61,7 @@ trait AssertThrows
         }
 
         try {
-            if ($params) {
+            if ($params !== []) {
                 call_user_func_array($func, $params);
             } else {
                 call_user_func($func);
@@ -119,7 +117,7 @@ trait AssertThrows
      * @param callable $func
      * @param mixed ...$params
      */
-    public function assertDoesNotThrow($throws, callable $func, ...$params)
+    public function assertDoesNotThrow($throws, callable $func, array $params = [])
     {
         $this->assertDoesNotThrowWithMessage($throws, null, $func, $params);
     }
@@ -132,7 +130,7 @@ trait AssertThrows
      * @param callable $func
      * @param mixed ...$params
      */
-    public function assertDoesNotThrowWithMessage($throws, ?string $message, callable $func, ...$params)
+    public function assertDoesNotThrowWithMessage($throws, ?string $message, callable $func, array $params = [])
     {
         if ($throws instanceof Throwable) {
             $message = $throws->getMessage();
@@ -140,7 +138,7 @@ trait AssertThrows
         }
 
         try {
-            if ($params) {
+            if ($params !== []) {
                 call_user_func_array($func, $params);
             } else {
                 call_user_func($func);
@@ -165,7 +163,7 @@ trait AssertThrows
 
             $actualMessage = $exception->getMessage();
 
-            if ($message != $actualMessage) {
+            if ($message !== $actualMessage) {
                 Assert::assertNotSame($message, $actualMessage);
                 return;
             }
