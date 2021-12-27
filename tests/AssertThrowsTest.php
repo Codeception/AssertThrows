@@ -62,6 +62,20 @@ final class AssertThrowsTest extends TestCase
     public function testAssertThrowsWithParams()
     {
         $func = function (string $foo, string $bar): void {
+            throw new MyException($foo.$bar);
+        };
+
+        $this->assertThrows(
+            MyException::class,
+            $func,
+            'foo',
+            'bar'
+        );
+    }
+
+    public function testAssertThrowsWithMessageWithParams()
+    {
+        $func = function (string $foo, string $bar): void {
             throw new Exception($foo.$bar);
         };
 
@@ -69,7 +83,8 @@ final class AssertThrowsTest extends TestCase
             Exception::class,
             'foobar',
             $func,
-            ['foo', 'bar']
+            'foo',
+            'bar'
         );
     }
 
@@ -87,6 +102,17 @@ final class AssertThrowsTest extends TestCase
         $this->assertDoesNotThrow(new RuntimeException('foo'), $func);
         $this->assertDoesNotThrowWithMessage(Exception::class, 'bar', $func);
         $this->assertDoesNotThrow(new Exception('bar'), $func);
+    }
+
+    public function testAssertDoesNotThrowWithParams()
+    {
+        $func = function (string $foo, string $bar): void {
+            throw new Exception($foo.$bar);
+        };
+
+        $this->assertDoesNotThrowWithMessage(Exception::class, 'bar', $func, 'bar');
+        $this->assertDoesNotThrowWithMessage(Exception::class, 'foobar', $func, 'bar', 'foo');
+        $this->assertDoesNotThrow(RuntimeException::class, $func, 'bar', 'foo');
     }
 }
 

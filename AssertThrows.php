@@ -35,9 +35,9 @@ trait AssertThrows
      * @param mixed ...$params
      * @throws Throwable
      */
-    public function assertThrows($throws, callable $func, array $params = [])
+    public function assertThrows($throws, callable $func, ...$params)
     {
-        $this->assertThrowsWithMessage($throws, null, $func, $params);
+        $this->assertThrowsWithMessage($throws, null, $func, ...$params);
     }
 
     /**
@@ -49,7 +49,7 @@ trait AssertThrows
      * @param mixed ...$params
      * @throws Throwable
      */
-    public function assertThrowsWithMessage($throws, ?string $message, callable $func, array $params = [])
+    public function assertThrowsWithMessage($throws, ?string $message, callable $func, ...$params)
     {
         if ($throws instanceof Throwable) {
             $message = $throws->getMessage();
@@ -61,7 +61,7 @@ trait AssertThrows
         }
 
         try {
-            if ($params !== []) {
+            if (!empty($params)) {
                 call_user_func_array($func, $params);
             } else {
                 call_user_func($func);
@@ -117,9 +117,9 @@ trait AssertThrows
      * @param callable $func
      * @param mixed ...$params
      */
-    public function assertDoesNotThrow($throws, callable $func, array $params = [])
+    public function assertDoesNotThrow($throws, callable $func, ...$params)
     {
-        $this->assertDoesNotThrowWithMessage($throws, null, $func, $params);
+        $this->assertDoesNotThrowWithMessage($throws, null, $func, ...$params);
     }
 
     /**
@@ -130,7 +130,7 @@ trait AssertThrows
      * @param callable $func
      * @param mixed ...$params
      */
-    public function assertDoesNotThrowWithMessage($throws, ?string $message, callable $func, array $params = [])
+    public function assertDoesNotThrowWithMessage($throws, ?string $message, callable $func, ...$params)
     {
         if ($throws instanceof Throwable) {
             $message = $throws->getMessage();
@@ -138,7 +138,7 @@ trait AssertThrows
         }
 
         try {
-            if ($params !== []) {
+            if (!empty($params)) {
                 call_user_func_array($func, $params);
             } else {
                 call_user_func($func);
